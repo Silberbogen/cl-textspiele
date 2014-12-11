@@ -6,6 +6,8 @@
 *.exe
 *.fasl
 *.o
+*.pyc
+*.pyo
 *.so
 
 # Packages #
@@ -36,3 +38,9 @@
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# EDITOR generated files #
+##########################
+*~
+*.bak
+*.swp
