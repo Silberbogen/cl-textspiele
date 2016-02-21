@@ -359,7 +359,7 @@ HOLE-ZAHL gibt die Zeichenkette String aus und erzwingt die Eingabe einer Zahl."
 	  (unless (= auswahl 4)
 		(loop
 		   (format t "~A~%" (%ssp (%spielerwahl tbbt) tbbt))
-		   (unless (hr:j-oder-n-p "Nochmal? [j/n]: ") (return))))
+		   (unless (hr:j-oder-n-p "Nochmal?") (return))))
 	  (format t "Danke für's mitspielen!~%")
 	  'ciao!))
 
