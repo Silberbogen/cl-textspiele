@@ -28,6 +28,7 @@
   "(hole-zahl string)
 HOLE-ZAHL gibt die Zeichenkette String aus und erzwingt die Eingabe einer Zahl."
   (format t "~A " string)
+  (terpri)
   (let* ((*read-eval* nil)
 		 (zahl (read)))
     (if (not (numberp zahl))
@@ -73,6 +74,7 @@ HOLE-ZAHL gibt die Zeichenkette String aus und erzwingt die Eingabe einer Zahl."
 (defun rate-die-zahl (&optional (minimum 1) (maximum 1000))
   "Versuche die Zahl zu erraten, die der Computer sich ausgedacht hat!"
   (format t "Versuche eine Zahl zwischen ~:d und ~:d zu erraten!~%" minimum maximum)
+  (terpri)
   (do ((anzahl 0 (1+ anzahl))
 	   (zahl (+ (random (1+ (- maximum minimum))) minimum))
 	   versuch)
@@ -120,7 +122,8 @@ HOLE-ZAHL gibt die Zeichenkette String aus und erzwingt die Eingabe einer Zahl."
 
 (defun %fragerunde (zahl)
   "Die interaktive Kommunikation zwischen den Spielern."
-  (format t "Ist deine Zahl vielleicht die ~A?~%" zahl) 
+  (format t "Ist deine Zahl vielleicht die ~A?~%" zahl)
+  (terpri)
   (let ((eingabe (intern (string-upcase (read-line)) :keyword)))
 	(case eingabe
 	  ((:= :ja :stimmt :korrekt :gleich)
@@ -244,6 +247,7 @@ HOLE-ZAHL gibt die Zeichenkette String aus und erzwingt die Eingabe einer Zahl."
 		   (addiere-bis-999 zahl anzahl))
 		  ((= eingabe 999)
 		   (format t "Momentan bist du bei ~A und hast bisher ~A Eingaben getätigt.~%" zahl anzahl)
+		   (terpri)
 		   (addiere-bis-999 zahl anzahl))
 		  (t
 		   (incf zahl eingabe)
@@ -261,6 +265,7 @@ HOLE-ZAHL gibt die Zeichenkette String aus und erzwingt die Eingabe einer Zahl."
 
 (defun %auswahl-spielart ()
   (format t "Möchtest du:~%1. Die klassische Variante~%2. Die moderne Variante~%3. Die Spielregeln beider Fassungen lesen~%4. Doch nicht spielen~%> ")
+  (terpri)
   (let* ((*read-eval* nil)
 		 (auswahl (read)))
 	(cond ((not (numberp auswahl))
@@ -322,19 +327,20 @@ HOLE-ZAHL gibt die Zeichenkette String aus und erzwingt die Eingabe einer Zahl."
   (format t "Du hast zur Auswahl:~%1. Schere~%2. Stein~%3. Papier~%")
   (unless (null tbbt)
 	(format t "4. Echse~%5. Spock~%~%Bitte triff deine Entscheidung: "))
-	(case (intern (string-upcase (read-line)) :keyword)
-	  ((:1 :schere)
-	   'schere)
-	  ((:2 :stein)
-	   'stein)
-	  ((:3 :papier)
-	   'papier)
-	  ((:4 :echse)
-	   'echse)
-	  ((:5 :spock)
-	   'spock)
-	  (otherwise
-	   (%spielerwahl tbbt))))
+  (terpri)
+  (case (intern (string-upcase (read-line)) :keyword)
+	((:1 :schere)
+	 'schere)
+	((:2 :stein)
+	 'stein)
+	((:3 :papier)
+	 'papier)
+	((:4 :echse)
+	 'echse)
+	((:5 :spock)
+	 'spock)
+	(otherwise
+	 (%spielerwahl tbbt))))
 
 
 (defun %ssp (spieler &optional (tbbt nil))
@@ -359,6 +365,7 @@ HOLE-ZAHL gibt die Zeichenkette String aus und erzwingt die Eingabe einer Zahl."
 	  (unless (= auswahl 4)
 		(loop
 		   (format t "~A~%" (%ssp (%spielerwahl tbbt) tbbt))
+		   (terpri)
 		   (unless (hr:j-oder-n-p "Nochmal?") (return))))
 	  (format t "Danke für's mitspielen!~%")
 	  'ciao!))
@@ -403,6 +410,7 @@ HOLE-ZAHL gibt die Zeichenkette String aus und erzwingt die Eingabe einer Zahl."
   (format t "~%*** ~A. Runde ***~%" runde)
   (format t "~&~A~%~%" (%noch-ungenutzt bekannt))
   (format t "~&~A~%~%Dein Tip? " (%ausgabe bekannt gesucht))
+  (terpri)
   (let ((eingabe (%versuch)))
 	(typecase eingabe
 	  (character (push eingabe bekannt)
@@ -430,7 +438,7 @@ HOLE-ZAHL gibt die Zeichenkette String aus und erzwingt die Eingabe einer Zahl."
 		(push (string-trim " " i) liste)))))
 
 
-(defun begriffe-raten (&optional (dateiname "Dokumente/begriffe.txt"))
+(defun begriffe-raten (&optional (dateiname "begriffe.txt"))
   "Errate einen Begriff, den sich der Computer ausgedacht hat!"
   (do* ((begriffe (hr:mischen (%erstelle-suchliste dateiname)))
 		beenden)
